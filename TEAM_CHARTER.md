@@ -5,7 +5,7 @@
 | ชื่อ | GitHub Username | บทบาท |
 |---|---|---|
 | kamonporn  | https://github.com/kamonpornth-ai             | Product Owner |
-| ...  | ...             | Scrum Master / Developer |
+| wiphawan  | https://github.com/Wiphawan-Phonlap         | Scrum Master / Developer |
 | ...  | ...             | Developer |
 
 ## Branching Strategy
