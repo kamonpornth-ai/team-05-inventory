@@ -1,5 +1,17 @@
 [
-  { "id": "P001", "name": "ปากกา", "quantity": 50 },
-  { "id": "P002", "name": "สมุด", "quantity": 30 },
-  { "id": "P003", "name": "ยางลบ", "quantity": 100 }
+  {
+    "id": "P001",
+    "name": "ปากกา",
+    "quantity": 50
+  },
+  {
+    "id": "P002",
+    "name": "สมุด",
+    "quantity": 30
+  },
+  {
+    "id": "P003",
+    "name": "ยางลบ",
+    "quantity": 100
+  }
 ]

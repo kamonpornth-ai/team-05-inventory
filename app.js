@@ -1,17 +1,54 @@
 const fs = require('fs');
+const path = require('path');
 
-function viewInventory() {
+const dataFilePath = path.join(__dirname, 'data.json');
+
+function readInventory() {
     try {
-        const data = fs.readFileSync('data.json', 'utf8');
-        const products = JSON.parse(data);
+        const fileContent = fs.readFileSync(dataFilePath, 'utf8');
+        const products = JSON.parse(fileContent);
 
-        console.log("=== รายการสินค้าทั้งหมด (US-01) ===");
-        products.forEach(p => {
-            console.log(`รหัส: ${p.id} | ชื่อ: ${p.name} | คงเหลือ: ${p.quantity} ชิ้น`);
-        });
+        return Array.isArray(products) ? products : [];
     } catch (error) {
-        console.log("เกิดข้อผิดพลาดในการอ่านข้อมูล:", error.message);
+        if (error.code === 'ENOENT') {
+            return [];
+        }
+
+        throw error;
     }
 }
 
+function saveInventory(products) {
+    fs.writeFileSync(dataFilePath, JSON.stringify(products, null, 2), 'utf8');
+}
+
+function viewInventory() {
+    try {
+        const products = readInventory();
+
+        if (products.length === 0) {
+            console.log('ยังไม่มีสินค้าในระบบ');
+            return;
+        }
+
+        console.log('=== รายการสินค้าในระบบ ===');
+        products.forEach((product) => {
+            console.log(`id: ${product.id} | name: ${product.name} | quantity: ${product.quantity}`);
+        });
+    } catch (error) {
+        console.log('เกิดข้อผิดพลาดในการอ่านข้อมูล:', error.message);
+    }
+}
+
+// ตัวอย่างการเขียนไฟล์ JSON
+// const products = readInventory();
+// products.push({ id: 'P004', name: 'ดินสอ', quantity: 20 });
+// saveInventory(products);
+
 viewInventory();
+
+module.exports = {
+    readInventory,
+    saveInventory,
+    viewInventory,
+};
