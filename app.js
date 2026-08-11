@@ -22,6 +22,20 @@ function saveInventory(products) {
     fs.writeFileSync(dataFilePath, JSON.stringify(products, null, 2), 'utf8');
 }
 
+function addItem(id, name, quantity) {
+    const products = readInventory();
+    const existingProduct = products.find((product) => product.id === id);
+
+    if (existingProduct) {
+        console.log('รหัสสินค้าซ้ำ');
+        return false;
+    }
+
+    products.push({ id, name, quantity });
+    saveInventory(products);
+    return true;
+}
+
 function viewInventory() {
     try {
         const products = readInventory();
@@ -51,4 +65,5 @@ module.exports = {
     readInventory,
     saveInventory,
     viewInventory,
+    addItem,
 };
