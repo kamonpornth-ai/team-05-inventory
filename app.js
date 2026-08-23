@@ -22,6 +22,44 @@ function saveInventory(products) {
     fs.writeFileSync(dataFilePath, JSON.stringify(products, null, 2), 'utf8');
 }
 
+// US-02: เพิ่มสินค้าใหม่
+function addItem(id, name, quantity) {
+    const products = readInventory();
+    const existingProduct = products.find((product) => product.id === id);
+
+    if (existingProduct) {
+        console.log('รหัสสินค้าซ้ำ');
+        return false;
+    }
+
+    products.push({ id, name, quantity });
+    saveInventory(products);
+    console.log(`เพิ่มสินค้า ${name} (รหัส: ${id}) เรียบร้อย`);
+    return true;
+}
+
+// US-03: แก้ไข/ปรับปรุงจำนวนสินค้า (รับเข้า หรือ จ่ายออก)
+function updateQuantity(id, amount) {
+    const products = readInventory();
+    const product = products.find((p) => p.id === id);
+
+    if (!product) {
+        console.log(`ไม่พบสินค้ารหัส: ${id}`);
+        return false;
+    }
+
+    if (product.quantity + amount < 0) {
+        console.log(`สินค้าคงเหลือไม่พอ (ปัจจุบันมี: ${product.quantity}, ต้องการจ่ายออก: ${Math.abs(amount)})`);
+        return false;
+    }
+
+    product.quantity += amount;
+    saveInventory(products);
+    console.log(`อัปเดตสินค้า ${product.name} (รหัส: ${id}) ยอดคงเหลือใหม่คือ: ${product.quantity}`);
+    return true;
+}
+
+// US-01: ดูรายการสินค้าในระบบ
 function viewInventory() {
     try {
         const products = readInventory();
@@ -40,15 +78,12 @@ function viewInventory() {
     }
 }
 
-// ตัวอย่างการเขียนไฟล์ JSON
-// const products = readInventory();
-// products.push({ id: 'P004', name: 'ดินสอ', quantity: 20 });
-// saveInventory(products);
-
 viewInventory();
 
 module.exports = {
     readInventory,
     saveInventory,
+    addItem,
+    updateQuantity,
     viewInventory,
 };
