@@ -42,14 +42,32 @@
 
 ```text
 [Prompt 1 - Spec Review]:
-"ฉันกำลังทำ Spec-Driven Development ช่วยรีวิว spec ด้านล่างนี้ในฐานะ senior software engineer..."
+"ฉันกำลังทำ Spec-Driven Development ช่วยรีวิว spec ด้านล่างนี้ในฐานะ senior software engineer ตอบเป็นภาษาไทย โดยชี้เฉพาะจุดที่:
+1. acceptance criteria ข้อใดยัง "กำกวม" หรือ "ไม่ testable"
+2. มี requirement ใดที่ขัดแย้งกันเองหรือซ้ำซ้อน
+3. มี edge case สำคัญใดที่ spec ยังไม่ครอบคลุม (เช่น จ่ายเท่ากับ threshold พอดี)
+อย่าเพิ่งเขียนโค้ด ให้เสนอเป็น checklist สั้น ๆ ว่าควรแก้ spec ตรงไหน [spec.md]"
 
 [Prompt 2 - No Context Test]:
-"จาก spec นี้ ช่วยเขียนโค้ด Python สำหรับฟีเจอร์แจ้งเตือนสต็อกต่ำ..."
+"จาก spec นี้ ช่วยเขียนโค้ด Python สำหรับฟีเจอร์แจ้งเตือนสต็อกต่ำ และรายงานมูลค่าสต็อกสินค้า
+[spec.md]"
 
 [Prompt 3 - Context-Driven Implementation]:
-"คุณคือ AI coding agent ของโปรเจกต์นี้ ทำตามกฎใน .ai-rules.md อย่างเคร่งครัด implement ฟีเจอร์ตาม spec ด้านล่าง..."
+"คุณคือ AI coding agent ของโปรเจกต์นี้ ทำตามกฎใน .ai-rules.md อย่างเคร่งครัด
+implement ฟีเจอร์ตาม spec ด้านล่าง โดยแยกไฟล์ตามที่กฎกำหนด (models / notifiers / service)
+ทุก acceptance criteria ใน spec ต้อง implement ครบ
+[.ai-rules.md]
+---
+[spec.md]"
 
 [Prompt 4 - Refactor with Factory & Observer]:
-"ช่วย refactor โค้ดโดยใช้ Factory Pattern และ Observer Pattern เพื่อให้ InventoryService รองรับหลาย Observers และปฏิบัติตาม DIP..."
-```
+"จากโค้ดใน models.py, notifiers.py, service.py ช่วยสร้าง:
+1. Class Diagram เป็น Mermaid (classDiagram) แสดง class, attribute, method, visibility และความสัมพันธ์ (composition, dependency, realization)
+2. Sequence Diagram เป็น Mermaid (sequenceDiagram) แสดง flow เมื่อพนักงานจ่ายสินค้าจนสต็อกต่ำกว่า threshold ตั้งแต่ InventoryService.issue_stock() จนถึงการเรียก notifier.send()"
+
+[Prompt 5: สั่ง AI Refactor]
+"จากผลการตรวจ SOLID design นี้ละเมิด OCP และ DIP เพราะ InventoryService มี coupling กับ notifier ช่วย refactorfy ดังนี้
+1. ใช้ Factory pattern: NotifierFactory.create(channel_type, destination) คืน Notifier instance
+2. InventoryService รับ Notifier ผ่าน constructor (Dependency Injection)
+3. รองรับหลายปลายทางพร้อมกันด้วย Observer pattern: InventoryService เก็บ list ของ observer และเรียก notify ทุกตัวเมื่อสต็อกต่ำกว่า threshold โดยไม่รู้ว่าแต่ละ observer เป็นช่องทางอะไร
+อย่าแก้ business logic การคำนวณสต็อก ให้แก้เฉพาะส่วน notification"
