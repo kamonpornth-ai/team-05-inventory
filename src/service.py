@@ -1,12 +1,22 @@
 ﻿"""
 โมดูลสำหรับจัดการ Business Logic ของระบบสต็อกสินค้า (Inventory Service)
 """
+import os
+import sys
+
+# รองรับการรันจากทั้ง root directory และจากภายในโฟลเดอร์ src
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 import uuid
 
-from src.models import Product, StockTransaction
-from src.notifiers import Notifier
+try:
+    from src.models import Product, StockTransaction
+    from src.notifiers import Notifier, NotifierFactory
+except ModuleNotFoundError:
+    from models import Product, StockTransaction
+    from notifiers import Notifier, NotifierFactory
 
 class InventoryService:
     """Service จัดการสต็อกสินค้าตามหลัก SOLID และ Observer Pattern"""
@@ -138,8 +148,6 @@ class InventoryService:
         return category_totals, grand_total
 
 if __name__ == "__main__":
-    from src.notifiers import NotifierFactory
-
     # 1. เตรียม Observers ผ่าน Factory
     email_obs = NotifierFactory.create("email", "manager@eng-store.com")
     sms_obs = NotifierFactory.create("sms", "089-999-8888")
