@@ -2,7 +2,7 @@
 
 def apply_discount(price: float, percent: float) -> float:
     """ลดราคาตาม percent (0-100) คืนราคาหลังลด"""
-    return price - percent / 100
+    return price - price * percent / 100
 
 
 def bulk_total(prices: list, discount_percent: float) -> float:
