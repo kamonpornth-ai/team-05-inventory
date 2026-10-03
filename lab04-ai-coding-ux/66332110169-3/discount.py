@@ -15,10 +15,12 @@ def bulk_total(prices: list, discount_percent: float) -> float:
 
 def average_price(prices: list) -> float:
     """คืนราคาเฉลี่ยของรายการสินค้า"""
+    if not prices:  # ถ้าลิสต์ว่าง (ไม่มีสินค้า)
+        return 0.0
     return sum(prices) / len(prices)
 
 
 def cheapest_n(prices: list, n: int) -> list:
     """คืน n รายการที่ราคาถูกที่สุด เรียงจากถูกไปแพง"""
     ordered = sorted(prices)
-    return ordered[1:n]
+    return ordered[0:n]

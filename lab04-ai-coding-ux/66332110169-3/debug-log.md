@@ -78,7 +78,7 @@ FAILED tests/test_discount.py::test_bulk_total - assert 299.9 == 270.0
 FAILED tests/test_discount.py::test_average_price_empty - ZeroDivisionError: ...
 FAILED tests/test_discount.py::test_cheapest_n - assert [20.0] == [10.0, 20.0]
 ========================= 4 failed, 2 passed in 0.04s ==========================
-```
+
 
 ## 2. test_apply_discount_basic
 - Assertion ที่เห็น: assert 99.9 == 90.0
@@ -90,6 +90,26 @@ FAILED tests/test_discount.py::test_cheapest_n - assert [20.0] == [10.0, 20.0]
 
 ## 3. test_bulk_total
 - Assertion ที่เห็น: assert 299.9 == 270.0
-- สมมติฐาน: น่าจะเกิดจาก root cause เดียวกับข้อ 2 เพราะ bulk_total เรียก apply_discount ข้างใน
-- วิธียืนยัน: แก้ apply_discount บรรทัดเดียว แล้วรัน test ทั้งชุด test_bulk_total ผ่านโดยไม่ได้แก้ bulk_total
-- ที่ทายไว้: ไม่ได้ทายไว้ก่อนรัน ผลจริง: ผ่าน
+- สมมติฐาน: น่าจะเกิดจาก root cause เดียวกับข้อ 2 เพราะ `bulk_total` เรียก `apply_discount` ข้างใน (ทำให้ลบออกแค่ 0.1 แทนที่จะลบส่วนลด 10%)
+- วิธียืนยัน: แก้ `apply_discount` บรรทัดเดียว แล้วรัน test ทั้งชุด ผลคือ `test_bulk_total` ผ่านโดยไม่ได้แก้โค้ดใน `bulk_total` เลย
+- ที่ทายไว้: ไม่ได้ทายไว้ก่อนรัน | ผลจริง: ผ่าน (สมมติฐานถูกต้อง)
+
+## 4. test_average_price_empty
+- Assertion ที่เห็น: ZeroDivisionError: division by zero
+- ผล sum([]) และ len([]): 0 และ 0
+- สมมติฐาน: น่าจะผิดเพราะฟังก์ชันไม่ได้เช็กก่อนว่าลิสต์ว่างหรือไม่ เมื่อใส่ลิสต์ว่างเข้ามาจึงเกิดการหารด้วย 0 (`len(prices)` เป็น 0)
+- วิธียืนยัน: จำลองการทำงาน `sum([]) / len([])` พบ Error เดียวกัน จากนั้นแก้โค้ดโดยเพิ่มเงื่อนไข `if not prices: return 0.0` ดักไว้ก่อน แล้วรัน pytest ใหม่ พบว่าผ่าน (Passed) สมมติฐานถูกต้อง
+
+## 6. test_cheapest_n
+- Assertion ที่เห็น: assert [20.0] == [10.0, 20.0]
+- สมมติฐาน: ฟังก์ชันน่าจะใช้ index ในการตัดลิสต์ (Slicing) ผิด โดยเริ่มที่ 1 แทนที่จะเริ่มที่ 0 ทำให้ข้ามค่าที่ถูกที่สุดไป
+- วิธียืนยัน: เปิดดูโค้ดพบ `ordered[1:n]` จึงแก้ไขเป็น `ordered[:n]` เพื่อให้เริ่มดึงข้อมูลตั้งแต่ตัวแรกสุด จากนั้นรัน pytest ใหม่ พบว่าผ่านทั้งหมด (6 passed) สมมติฐานถูกต้อง
+
+
+
+
+
+
+
+
+
