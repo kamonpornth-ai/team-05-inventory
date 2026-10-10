@@ -61,16 +61,15 @@ swe-team-05-inventory/
 
 ### Lab 2: จำลอง Sprint แบบ Agile ด้วย GitHub Flow
 
-- ทำงานตาม GitHub Flow: issue, branch `feat/<issue>-<ชื่องาน>`, pull request, review, merge
+- ทำงานตาม GitHub Flow: issue, branch, pull request, review, merge
 - Sprint Goal และ WIP limit อยู่ใน `TEAM_CHARTER.md`
 - Velocity และ Start-Stop-Continue อยู่ใน `RETRO-SPRINT-1.md`
-- Velocity Sprint 1: ___ points | PR ที่ merge แล้ว: ___ PR
 
 ### Lab 3: Spec-Driven Development และ Context Engineering
 
-- เขียน spec ก่อนเขียนโค้ด: [`inventory-sdd/specs/spec.md`](inventory-sdd/specs/spec.md)
-- ไฟล์กฎโปรเจกต์สำหรับ AI: [`inventory-sdd/.ai-rules.md`](inventory-sdd/.ai-rules.md)
-- เทียบผลก่อนและหลังมี context และบันทึกการแก้ที่ spec: [`AI_ITERATION_LOG.md`](inventory-sdd/AI_ITERATION_LOG.md)
+- เขียน spec ก่อนเขียนโค้ด
+- ไฟล์กฎโปรเจกต์สำหรับ AI
+- เทียบผลก่อนและหลังมี context และบันทึกการแก้ที่ 
 - ตรวจ SOLID ด้วยตัวเอง และ refactor ด้วย Factory + Observer
 
 ### Lab 4: UX, Code Review และ Debugging
@@ -81,17 +80,10 @@ swe-team-05-inventory/
 - Mockup ใช้ชุดสีที่ผ่าน WCAG AA: Primary `#1E40AF`, Success `#15803D`, Warning `#B45309`, Text `#111827`
 
 **ส่วนที่ 2 และ 3: AI Coding & Debugging**
-
-- เปรียบเทียบ prompt สั้นและ prompt ที่แนบ context
-- ทำ Code Review สำหรับ PR ที่ AI เขียน (`code-review.md`)
-- Debug โค้ดใน `discount.py` ให้ test ผ่านครบถ้วน
-
-รันเทสต์ของ Lab 4:
-
-```bash
-cd lab04-ai-coding-ux
-python -m pytest tests/ -v
-```
+Lab 2: Sprint แบบ Agile และ GitHub Flow
+แนวทางการทำงาน: GitHub Flow (issue, branch, pull request, review, merge)
+Sprint Goal และ WIP limit
+Velocity และ Start-Stop-Continue
 
 ### Lab 5: TDD, Refactor และ CI/CD
 
