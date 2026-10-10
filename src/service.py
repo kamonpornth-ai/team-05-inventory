@@ -7,8 +7,6 @@ import sys
 # รองรับการรันจากทั้ง root directory และจากภายในโฟลเดอร์ src
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from typing import Dict, List, Optional, Tuple
-from datetime import datetime
 import uuid
 
 try:
@@ -21,16 +19,16 @@ except ModuleNotFoundError:
 class InventoryService:
     """Service จัดการสต็อกสินค้าตามหลัก SOLID และ Observer Pattern"""
 
-    def __init__(self, observers: Optional[List[Notifier]] = None):
+    def __init__(self, observers: list[Notifier] | None = None):
         """
         สร้าง InventoryService พร้อมรับ Dependency Observers
         
         Args:
             observers: รายการผู้รับการแจ้งเตือน (Notifiers)
         """
-        self._products: Dict[str, Product] = {}
-        self._transactions: List[StockTransaction] = []
-        self._observers: List[Notifier] = observers or []
+        self._products: dict[str, Product] = {}
+        self._transactions: list[StockTransaction] = []
+        self._observers: list[Notifier] = observers or []
 
     def attach_observer(self, observer: Notifier) -> None:
         """เพิ่มผู้รับการแจ้งเตือนใหม่ (Observer)"""
@@ -60,11 +58,11 @@ class InventoryService:
             raise ValueError(f"รหัสสินค้าซ้ำ: {product.id}")
         self._products[product.id] = product
 
-    def get_product(self, product_id: str) -> Optional[Product]:
+    def get_product(self, product_id: str) -> Product | None:
         """ค้นหาข้อมูลสินค้าตาม ID"""
         return self._products.get(product_id)
 
-    def receive_stock(self, product_id: str, amount: int, note: Optional[str] = None) -> bool:
+    def receive_stock(self, product_id: str, amount: int, note: str | None = None) -> bool:
         """
         บันทึกการรับสินค้าเข้าสต็อก
         
@@ -93,7 +91,7 @@ class InventoryService:
         self._transactions.append(tx)
         return True
 
-    def issue_stock(self, product_id: str, amount: int, note: Optional[str] = None) -> bool:
+    def issue_stock(self, product_id: str, amount: int, note: str | None = None) -> bool:
         """
         บันทึกการจ่ายสินค้าออกจากสต็อก พร้อมเช็คการแจ้งเตือนสต็อกต่ำ
         
@@ -130,14 +128,14 @@ class InventoryService:
 
         return True
 
-    def calculate_valuation_report(self) -> Tuple[Dict[str, float], float]:
+    def calculate_valuation_report(self) -> tuple[dict[str, float], float]:
         """
         คำนวณมูลค่าสต็อกสินค้าแยกตามหมวดหมู่และยอดรวมทั้งสิ้น
         
         Returns:
             Tuple[Dict[category_name, category_total_value], grand_total_value]
         """
-        category_totals: Dict[str, float] = {}
+        category_totals: dict[str, float] = {}
         grand_total: float = 0.0
 
         for product in self._products.values():

@@ -3,7 +3,7 @@
 """
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
+
 
 @dataclass
 class Category:
@@ -38,4 +38,4 @@ class StockTransaction:
     amount: int
     balance_after: int
     timestamp: datetime = datetime.now()
-    note: Optional[str] = None
+    note: str | None = None

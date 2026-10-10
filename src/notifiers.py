@@ -2,13 +2,14 @@
 โมดูลสำหรับระบบแจ้งเตือน (Observer & Factory Pattern)
 """
 from abc import ABC, abstractmethod
-from typing import Dict, Any
+from typing import Any
+
 
 class Notifier(ABC):
     """Abstract Base Class / Interface สำหรับผู้รับการแจ้งเตือน (Observer)"""
 
     @abstractmethod
-    def send(self, message: str, metadata: Dict[str, Any]) -> bool:
+    def send(self, message: str, metadata: dict[str, Any]) -> bool:
         """
         ส่งข้อความแจ้งเตือนไปยังปลายทาง
         
@@ -24,7 +25,7 @@ class EmailNotifier(Notifier):
     def __init__(self, recipient_email: str):
         self.recipient_email = recipient_email
 
-    def send(self, message: str, metadata: Dict[str, Any]) -> bool:
+    def send(self, message: str, metadata: dict[str, Any]) -> bool:
         print(f"[Email to {self.recipient_email}] {message} (Product: {metadata.get('product_name')}, Stock: {metadata.get('current_stock')}/{metadata.get('threshold')})")
         return True
 
@@ -34,7 +35,7 @@ class SMSNotifier(Notifier):
     def __init__(self, phone_number: str):
         self.phone_number = phone_number
 
-    def send(self, message: str, metadata: Dict[str, Any]) -> bool:
+    def send(self, message: str, metadata: dict[str, Any]) -> bool:
         print(f"[SMS to {self.phone_number}] {message} - {metadata.get('product_name')} remaining {metadata.get('current_stock')}")
         return True
 

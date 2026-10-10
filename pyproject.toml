@@ -1,0 +1,13 @@
+[tool.ruff]
+line-length = 100
+extend-exclude = ["lab04-ai-coding-ux", "pricing_legacy.py", "src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.coverage.run]
+omit = [
+    "src/*",
+    "lab04-ai-coding-ux/*",
+    "tests/*"
+]
