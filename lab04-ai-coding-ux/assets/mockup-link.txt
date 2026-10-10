@@ -1,0 +1,10 @@
+# UI Mockup Links - Lab 04
+
+Figma Mockup Link (Public View):
+https://www.figma.com/file/swe-inventory-team05-mockup/Inventory-System-UI
+
+Design Systems & Colors used (WCAG AA Compliant):
+- Primary: #1E40AF (Blue - Primary Button & Active Navigation)
+- Success: #15803D (Green - Success Status & Normal Stock)
+- Warning: #B45309 (Amber - Low Stock Alert)
+- Text: #111827 (Dark Charcoal - High Contrast Text on White Background)
