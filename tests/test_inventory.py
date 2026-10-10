@@ -5,8 +5,8 @@ Unit tests สำหรับคลาส Inventory ใน inventory.py
 2. Unit tests และ Edge cases สำหรับเมธอด sell และเมธอดพื้นฐาน
 """
 import pytest
-from inventory import Inventory, InventoryItem
 
+from inventory import Inventory, InventoryItem
 
 # =====================================================================
 # ส่วนที่ 1: TDD tests สำหรับ low_stock_items(threshold) ครบ 6 กรณี
